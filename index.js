@@ -83,6 +83,14 @@ export default class CheckBox extends Component {
         this.props.onClick();
     }
 
+    componentWillReceiveProps(newProps) {
+        if (newProps.isChecked !== this.state.isChecked) {
+            this.setState({
+                isChecked: newProps.isChecked
+            })
+        }
+    }
+
     render() {
         return (
             <TouchableHighlight
