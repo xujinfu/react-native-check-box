@@ -1,4 +1,4 @@
- /**
+/**
  * react-native-check-box
  * Checkbox component for react native, it works on iOS and Android
  * https://github.com/crazycodeboy/react-native-check-box
@@ -22,6 +22,7 @@ export default class CheckBox extends Component {
         super(props);
         this.state = {
             isChecked: this.props.isChecked,
+            disabled: this.props.disabled
         }
     }
 
@@ -36,25 +37,28 @@ export default class CheckBox extends Component {
         checkedImage: React.PropTypes.element,
         unCheckedImage: React.PropTypes.element,
         onClick: React.PropTypes.func.isRequired,
-        isChecked: React.PropTypes.bool
-
+        isChecked: React.PropTypes.bool,
+        disabled: React.PropTypes.bool
     }
+
     static defaultProps = {
         isChecked: false,
+        disabled: false,
         leftTextStyle: {},
         rightTextStyle: {}
     }
 
     _renderLeft() {
-        if (this.props.leftTextView)return this.props.leftTextView;
-        if (!this.props.leftText)return null;
+        if (this.props.leftTextView) return this.props.leftTextView;
+        if (!this.props.leftText) return null;
         return (
             <Text style={[styles.leftText, this.props.leftTextStyle]}>{this.props.leftText}</Text>
         )
     }
+
     _renderRight() {
-        if (this.props.rightTextView)return this.props.rightTextView;
-        if (!this.props.rightText)return null;
+        if (this.props.rightTextView) return this.props.rightTextView;
+        if (!this.props.rightText) return null;
         return (
             <Text style={[styles.rightText, this.props.rightTextStyle]}>{this.props.rightText}</Text>
         )
@@ -77,10 +81,12 @@ export default class CheckBox extends Component {
     }
 
     onClick() {
-        this.setState({
-            isChecked: !this.state.isChecked
-        })
-        this.props.onClick();
+        if (!this.state.disabled) {
+            this.setState({
+                isChecked: !this.state.isChecked
+            });
+            this.props.onClick();
+        }
     }
 
     componentWillReceiveProps(newProps) {
@@ -89,13 +95,19 @@ export default class CheckBox extends Component {
                 isChecked: newProps.isChecked
             })
         }
+
+        if (newProps.disabled !== this.state.disabled) {
+            this.setState({
+                disabled: newProps.disabled
+            })
+        }
     }
 
     render() {
         return (
             <TouchableHighlight
                 style={this.props.style}
-                onPress={()=>this.onClick()}
+                onPress={() => this.onClick()}
                 underlayColor='transparent'
             >
                 <View style={styles.container}>
@@ -107,6 +119,7 @@ export default class CheckBox extends Component {
         )
     }
 }
+
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
@@ -119,4 +132,4 @@ const styles = StyleSheet.create({
         flex: 1,
         marginLeft: 10
     }
-})
+});
