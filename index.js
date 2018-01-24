@@ -7,15 +7,16 @@
  * @flow
  */
 
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 import {
     StyleSheet,
     View,
+    ViewPropTypes,
     Image,
     Text,
     TouchableHighlight
 } from 'react-native'
-
+import PropTypes from 'prop-types';
 
 export default class CheckBox extends Component {
     constructor(props) {
@@ -27,18 +28,18 @@ export default class CheckBox extends Component {
     }
 
     static propTypes = {
-        ...View.propTypes,
-        leftText: React.PropTypes.string,
-        leftTextView: React.PropTypes.element,
-        rightText: React.PropTypes.string,
-        leftTextStyle: React.PropTypes.object,
-        rightTextView: React.PropTypes.string,
-        rightTextStyle: React.PropTypes.object,
-        checkedImage: React.PropTypes.element,
-        unCheckedImage: React.PropTypes.element,
-        onClick: React.PropTypes.func.isRequired,
-        isChecked: React.PropTypes.bool,
-        disabled: React.PropTypes.bool
+        ...(ViewPropTypes || View.PropTypes),
+        leftText: PropTypes.string,
+        leftTextView: PropTypes.element,
+        rightText: PropTypes.string,
+        leftTextStyle: PropTypes.object,
+        rightTextView: PropTypes.string,
+        rightTextStyle: PropTypes.object,
+        checkedImage: PropTypes.element,
+        unCheckedImage: PropTypes.element,
+        onClick: PropTypes.func.isRequired,
+        isChecked: PropTypes.bool,
+        disabled: PropTypes.bool
     }
 
     static defaultProps = {
